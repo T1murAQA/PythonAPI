@@ -1,6 +1,3 @@
-from datetime import datetime
-
-
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
@@ -19,3 +16,7 @@ class TestUserRegister(BaseCase):
         data = self.prepare_registration_data(email)
         response = MyRequests.post("/user/", data=data)
         Assertions.assert_code_status(response, 400)
+        print(response.content)
+        print(response.text)
+        assert response.text == f"Users with email '{email}' already exists", \
+            f'Unexpected response text {response.text}'
